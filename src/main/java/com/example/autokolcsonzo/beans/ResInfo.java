@@ -4,6 +4,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+/**
+ * A foglalásho tárolja a kezdeti adatokat amiket nem a felhasználó ad meg.
+ *
+ */
 public class ResInfo {
     private String licensePlate;
     private int dailyPrice;

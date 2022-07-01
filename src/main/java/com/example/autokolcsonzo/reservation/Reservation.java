@@ -6,6 +6,9 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * A foglalásokat tároló tábla.
+ */
 @Table
 @Entity
 public class Reservation {

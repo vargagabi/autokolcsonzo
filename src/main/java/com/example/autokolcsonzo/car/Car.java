@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+/**
+ * Egy adutó adatait tároló tábla
+ */
 @Entity
 @Table
 public class Car {

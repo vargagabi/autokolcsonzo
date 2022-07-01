@@ -19,6 +19,7 @@ public class MainController {
         this.reservationService = reservationService;
     }
 
+
     @GetMapping("/")
     public String viewIndex(){
         return "index";
@@ -29,13 +30,24 @@ public class MainController {
         return "admin";
     }
 
+    /**
+     * A foglalási olalt tölti be.
+     * @param model
+     * @return
+     */
     @GetMapping("/cars")
     public String init(Model model){
-        model.addAttribute("carR", new ResInfo());
+//        model.addAttribute("carR", new ResInfo());
         return "cars";
     }
 
-
+    /**
+     * Miután ki lett választva két dátum, az elérhető autókat tölti be.
+     * @param startDate
+     * @param endDate
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/cars",params = {"startDate","endDate"})
     public String getCars(@RequestParam("startDate") String startDate, @RequestParam("endDate")String endDate,Model model){
         if(startDate.isEmpty() || endDate.isEmpty()){

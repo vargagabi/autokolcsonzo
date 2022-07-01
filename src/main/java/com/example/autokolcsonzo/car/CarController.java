@@ -22,12 +22,23 @@ public class CarController {
         this.reservationService = reservationService;
     }
 
+    /**
+     * Az autók kilistázásáért felel az admin oldalon
+     * @param model
+     * @return
+     */
     @GetMapping("/admin/cars")
     public String carList(Model model){
         model.addAttribute("cars", carService.findAll());
         model.addAttribute("newCar",new CarInfo());
         return "admin";
     }
+
+    /**
+     * Új autó hozzáadásáért felel.
+     * @param newCar az autó adatai, a kép itt még MultiparFile típusú.
+     * @return
+     */
     @PostMapping("/admin/saveCar")
     public String saveCar(@ModelAttribute("newCar") CarInfo newCar){
         try {
@@ -38,17 +49,40 @@ public class CarController {
         return "redirect:/admin/cars";
     }
 
+    /**
+     * Az autók deaktiválásáért/aktiválásáért felel.
+     * @param license
+     * @param price
+     * @param disabled
+     * @return
+     */
     @GetMapping("/admin/cars/carActivation")
     public String carActivation(@RequestParam("a1") String license, @RequestParam("a2") int price, @RequestParam("a3") boolean disabled){
         this.carService.modifyCar(new Car(license,price,!disabled));
         this.reservationService.deleteDeactivated();
         return "redirect:/admin/cars";
     }
+
+    /**
+     * A módosítandó autó adatait adja át az admin.html-nek hogí az elérhető legyen majd a form-ban.
+     * @param model
+     * @param license
+     * @param price
+     * @param disabled
+     * @return
+     */
     @GetMapping("/admin/cars/carModifying")
     public String carModifying(Model model, @RequestParam("a1") String license, @RequestParam("a2")  int price,@RequestParam("a3") boolean disabled){
         model.addAttribute("carToMod", new Car(license,price,disabled));
         return "admin";
     }
+
+    /**
+     * A módosított autó új adatait menti le az adatbázisba, ha kép is lett feltöltve, akkor azt lecseréli az újra.
+     * Abban az esetben, ha az autót deaktiválták, akkor az arra az autóra vonatkozó foglalásokat törli.
+     * @param newCar A form-ban az átadott objektum.
+     * @return
+     */
     @PostMapping("/admin/modifyCar")
     public String modifyCar(@ModelAttribute("carToMod") CarInfo newCar)  {
         if(!newCar.getPicture().isEmpty()){

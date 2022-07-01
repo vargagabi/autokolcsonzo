@@ -17,10 +17,13 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
+    /**
+     * Elérhető adatok lekérdezéséhez.
+     * @param start
+     * @param end
+     * @return
+     */
     public List<Car> listAvailableCars(LocalDate start, LocalDate end){
-        System.out.println("----------------------------------------");
-        System.out.println(start.toString());
-        System.out.println(end.toString());
         return reservationRepository.getAvailableCars(start,end);
     }
 

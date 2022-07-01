@@ -2,6 +2,9 @@ package com.example.autokolcsonzo.beans;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Egy új Car feltöltéséhez tárolja az adatokat. Ezt adjuk át a form-ból a controllernek.
+ */
 public class CarInfo {
     private String licensePlate;
     private int dailyPrice;

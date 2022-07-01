@@ -29,11 +29,23 @@ public class CarService {
         this.carRepository.save(new Car(licensePlate,price,disabled, new String(Base64.getEncoder().encode(picture.getBytes()), "UTF-8")));
     }
 
+    /**
+     * Az autó módosításáért felel.
+     * @param newCar
+     */
     public void modifyCar(Car newCar){
         System.out.println(newCar.toString());
         this.carRepository.modifyCar(newCar.getLicensePlate(),newCar.getDailyPrice(),newCar.isDisabled());
     }
 
+    /**
+     * Az autó módosításáért felel új képpel.
+     * @param licensePlate
+     * @param dailyPrice
+     * @param disabled
+     * @param picture
+     * @throws IOException
+     */
     public void modifyCarWithPic(String licensePlate, int dailyPrice, boolean disabled, MultipartFile picture) throws IOException {
         this.carRepository.modifyCarWithPicture(licensePlate,dailyPrice,disabled, new String(Base64.getEncoder().encode(picture.getBytes()), "UTF-8"));
     }

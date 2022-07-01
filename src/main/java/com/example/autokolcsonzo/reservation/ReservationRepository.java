@@ -15,6 +15,12 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
+    /**
+     * Két dátum között elérhető autókat kérdezi le az adatbázisból
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     @Query("SELECT new com.example.autokolcsonzo.car.Car(c.licensePlate,c.dailyPrice,c.disabled,c.picture) FROM Car c WHERE " +
             "c.disabled IS false  AND c.licensePlate NOT IN " +
             "(SELECT c2.licensePlate FROM Car c2, Reservation  r WHERE c.licensePlate=r.licensePlate AND" +
@@ -22,6 +28,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     @Transactional
     List<Car> getAvailableCars(LocalDate startDate, LocalDate endDate);
 
+    /**
+     * Deaktiválás esetén az adott autóra vonatkozó foglalásokat törli az adatbázisból
+     */
     @Modifying
     @Query("DELETE FROM Reservation r WHERE r.licensePlate IN (SELECT c.licensePlate FROM Car c WHERE c.disabled IS true)")
     @Transactional
