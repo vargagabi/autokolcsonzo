@@ -26,11 +26,11 @@
 <ul class="nav nav-tabs justify-content-center">
     <li class="nav-item">
         <a th:class="${#httpServletRequest.requestURI=='/admin/reservations'?'active':''}+' nav-link'"
-           href="/admin/reservations">RESERVAITONS</a>
+           href="/admin/reservations">Foglalások</a>
     </li>
     <li class="nav-item">
         <a th:class="'nav-link '+ ${#httpServletRequest.requestURI=='/admin/cars'?'active':''} "
-           href="/admin/cars">CARS</a>
+           href="/admin/cars">Autók</a>
     </li>
 </ul>
 <div class="container ">
@@ -41,13 +41,13 @@
     <table class="table table-striped table-bordered">
         <tr class="thead-dark">
             <th>#</th>
-            <th>Nev</th>
+            <th>Név</th>
             <th>Email</th>
-            <th>Cim</th>
-            <th>Telefonszam</th>
-            <th>Osszeg</th>
-            <th>Rendszam</th>
-            <th>Elso nap</th>
+            <th>Cím</th>
+            <th>Telefonszám</th>
+            <th>Összeg</th>
+            <th>Rendszám</th>
+            <th>Első nap</th>
             <th>Utolso nap</th>
         </tr>
         <tr th:each="res,stat: ${reservations}">
@@ -64,23 +64,24 @@
     </table>
 </div>
 <div th:if="${#httpServletRequest.requestURI=='/admin/cars'}" class="container border ">
+    <h1 class="text-center w-100">Új autó hozzáadaása</h1>
     <form enctype="multipart/form-data" action="#" method="post" th:object="${newCar}"
           th:action="@{/admin/saveCar}">
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="licensePlate">Rendszam</label>
+            <label class="col-form-label col-2" for="licensePlate">Rendszám</label>
             <div class="col-6">
                 <input id="licensePlate" required class="form-control" type="text" th:field="*{licensePlate}">
             </div>
         </div>
         <div class="form-group row  justify-content-center ">
-            <label class="col-form-label col-2" for="price">Napi Ar</label>
+            <label class="col-form-label col-2" for="price">Napi ár</label>
             <div class="col-6">
                 <input id="price" class="form-control" required type="number" min="1" value="1"
                        th:field="*{dailyPrice}">
             </div>
         </div>
         <div class=" form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="file">Kep</label>
+            <label class="col-form-label col-2" for="file">Kép</label>
             <div class="col-6">
                 <input id="file" class="form-control-file" required type="file" th:field="*{picture}">
             </div>
@@ -92,17 +93,17 @@
         </div>
     </form>
     <br/>
-    <div class="card-columns">
-            <div class="card" style="width: 15rem;" th:each="car: ${cars}">
+    <div class="card-columns" >
+            <div class="card" style="width: 20rem;"  th:each="car: ${cars}">
                 <img th:src="@{'data:image/jpeg;base64,'+${car.picture}}" class="card-img-top" alt="photo">
                 <div class="card-body">
                     <h5 class="card-title" th:text="'Redszam: '+ ${car.licensePlate}"></h5>
                     <p class="card-text" th:text="'Ar: '+${car.dailyPrice}"></p>
                     <p class="card-text" th:text="'Deaktivalt: '+${car.disabled?'igen':'nem'}"></p>
                     <a class="btn btn-warning btn-sm"
-                       th:href="@{/admin/cars/carActivation(a1=*{car.licensePlate},a2=*{car.dailyPrice},a3=*{car.disabled})}">Deaktivalas</a>
+                       th:href="@{/admin/cars/carActivation(a1=*{car.licensePlate},a2=*{car.dailyPrice},a3=*{car.disabled})}">Deaktiválás</a>
                     <a class="btn btn-secondary btn-sm"
-                       th:href="@{/admin/cars/carModifying(a1=*{car.licensePlate},a2=*{car.dailyPrice},a3=*{car.disabled})}">Modositas</a>
+                       th:href="@{/admin/cars/carModifying(a1=*{car.licensePlate},a2=*{car.dailyPrice},a3=*{car.disabled})}">Módosítás</a>
                 </div>
             </div>
         </div>
@@ -113,28 +114,28 @@
     <h1 class="text-center" th:text="${carToMod.licensePlate}"></h1>
     <form enctype="multipart/form-data" action="#" method="post" th:object="${carToMod}" th:action="@{/admin/modifyCar}">
         <div class="form-group row justify-content-center">
-            <label for="price2" class="col-form-label col-1">Ar</label>
+            <label for="price2" class="col-form-label col-1">Ár</label>
             <div class="col-6">
-                <input id="price2" type="number" required min="1" value="1" th:value="${carToMod.dailyPrice}"
+                <input id="price2" type="number" class="form-control" required min="1" value="1" th:value="${carToMod.dailyPrice}"
                        name="dailyPrice">
             </div>
         </div>
         <div class="form-group row justify-content-center">
-            <label class="col-form-label col-1" for="disabled">Deaktivalt</label>
+            <label class="col-form-label col-1" for="disabled">Deaktivált</label>
             <div class="col-6">
-                <input type="checkbox"  class="form-check-input" id="disabled" th:checked="${carToMod.disabled}"
+                <input type="checkbox" class="form-control" id="disabled" th:checked="${carToMod.disabled}"
                        name="disabled">
             </div>
         </div>
         <div class="form-group row justify-content-center">
-            <label class="col-form-label col-1" for="fileLabel">Kep</label>
+            <label class="col-form-label col-1" for="fileLabel">KÉp</label>
             <div class="col-6">
                 <input type="file"  class="form-control-file" id="fileLabel" name="picture">
             </div>
         </div>
         <div class="form-group row justify-content-center">
             <div class="col-5">
-                <input type="submit"  value="Modosit" class="btn btn-warning btn-sm">
+                <input type="submit"  value="Módosít" class="form-control btn btn-warning btn-sm">
             </div>
         </div>
         <input type="hidden" th:value="${carToMod.licensePlate}" name="licensePlate" readonly>

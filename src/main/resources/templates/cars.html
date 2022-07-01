@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Autokolcsonzo</title>
+    <title>Autókölcsönző</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -20,11 +20,11 @@
 <div th:if="${#httpServletRequest.requestURI=='/cars'}" class="container border justify-content-center">
     <form method="get" class="border" action="#">
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-1" for="startDateLabel">Elso nap</label>
+            <label class="col-form-label col-1" for="startDateLabel">Első nap</label>
             <div class="col-2">
                 <input class="form-control" type="date" value="1" id="startDateLabel" name="startDate">
             </div>
-            <label class="col-form-label col-1" for="endDateLabel">Utolso nap</label>
+            <label class="col-form-label col-1" for="endDateLabel">Utolsó nap</label>
             <div class="col-2">
                 <input class="from-control" type="date" value="1" id="endDateLabel" name="endDate">
             </div>
@@ -37,17 +37,17 @@
     </form>
     <table class="table table-striped table-bordered text-center">
         <tr class="thead-dark">
-            <th>Kep</th>
-            <th>Rendszam</th>
-            <th>Ar</th>
-            <th>Lefoglalas</th>
+            <th>Kép</th>
+            <th>Rendszám</th>
+            <th>Ár</th>
+            <th>Lefoglalás</th>
         </tr>
         <tr th:each="car: ${cars}" >
             <td><img th:src="@{'data:image/jpeg;base64,'+${car.picture}}" class="float-left img-responsive" width="250" alt="Car Photo" ></td>
             <td th:text="${car.licensePlate}"></td>
             <td th:text="${car.dailyPrice}"></td>
             <td>
-                <a th:href="@{/cars/reservation(a1=*{car.licensePlate},a2=*{carR.startDate},a3=*{carR.endDate},a4=*{car.dailyPrice})}" class="btn btn-info btn-lg">Foglalas</a>
+                <a th:href="@{/cars/reservation(a1=*{car.licensePlate},a2=*{carR.startDate},a3=*{carR.endDate},a4=*{car.dailyPrice})}" class="btn btn-info btn-lg">Foglalás</a>
             </td>
         </tr>
     </table>
@@ -58,31 +58,31 @@
     <h1 class="text-center w-100">Foglalasi adatok megadasa</h1>
     <form method="post" th:action="@{/cars/saveRes}" action="#" th:object="${resObj}">
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="startDateLabel2">Kezdo datum</label>
+            <label class="col-form-label col-2" for="startDateLabel2">Első nap</label>
             <div class="col-6">
                 <input type="date" required id="startDateLabel2" readonly th:value="${carR.startDate}" name="startDate">
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="endDateLabel2">Vegso Datum</label>
+            <label class="col-form-label col-2" for="endDateLabel2">Utolsó nap</label>
             <div class="col-6">
                 <input type="date" required readonly id="endDateLabel2" th:value="${carR.endDate}" name="endDate">
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="price">Napi ar</label>
+            <label class="col-form-label col-2" for="price">Napi ár</label>
             <div class="col-6">
                 <input type="text"  required th:value="${carR.dailyPrice}" id="price" readonly disabled="disabled">
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="licensePlateLabel">Rendszam</label>
+            <label class="col-form-label col-2" for="licensePlateLabel">Rendszám</label>
             <div class="col-6">
                 <input type="text" required th:value="${carR.licensePlate}" id="licensePlateLabel" name="licensePlate" readonly>
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="nameLabel">Nev</label>
+            <label class="col-form-label col-2" for="nameLabel">Név</label>
             <div class="col-6">
                 <input class="form-control" required type="text" th:field="*{name}" id="nameLabel">
             </div>
@@ -94,32 +94,32 @@
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="addressLabel">Lakcim</label>
+            <label class="col-form-label col-2" for="addressLabel">Lakcím</label>
             <div class="col-6">
                 <input class="form-control" required type="text" th:field="*{address}" id="addressLabel">
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="phoneLabel">Telefonszam</label>
+            <label class="col-form-label col-2" for="phoneLabel">Telefonszám</label>
             <div class="col-6">
                 <input class="form-control" required type="tel" id="phoneLabel" th:field="*{phone}">
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="daysLabel">Berleti napok</label>
+            <label class="col-form-label col-2" for="daysLabel">Napok száma</label>
             <div class="col-6">
                 <input class="form-control" required type="number" th:value="${carR.days}" id="daysLabel" name="days" readonly>
             </div>
         </div>
         <div class="form-group row  justify-content-center">
-            <label class="col-form-label col-2" for="fullPriceLabel">Teljes osszeg</label>
+            <label class="col-form-label col-2" for="fullPriceLabel">Teljes összeg</label>
             <div class="col-6">
                 <input class="form-control" required type="number" th:value="${carR.days * carR.dailyPrice}" id="fullPriceLabel" name="fullPrice" readonly>
             </div>
         </div>
         <div class=" form-group row justify-content-center">
             <div class="col-4 ">
-                <input class="form-control btn btn-primary btn-lg"  type="submit" value="Foglalas">
+                <input class="form-control btn btn-primary btn-lg"  type="submit" value="Foglalás">
             </div>
         </div>
 
